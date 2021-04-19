@@ -66,7 +66,7 @@ h1 {
     align-items: center;
     position: relative;
 }
-#vinylBoxTop{
+/* #vinylBoxTop{
     width: 540px;
     height: 460px;
     background-color: white;
@@ -75,8 +75,29 @@ h1 {
     box-shadow: 5px 5px black;
     position: absolute;
     z-index: 1;
-  
+} */
+
+#onOffBtn{
+    width: 28px;
+    height: 28px;
+    background-color: #e2e2e2;
+    position: absolute;
+    z-index: 1;
+    left: 15px;
+    top: 38px;
+    border-radius: 5px;
+    font-size: 15px;
+    text-align: center;
+    padding: 4px 0 0 0;
+    cursor: pointer;
 }
+
+#onOffBtn:hover{
+    transition: 0.5s;
+    background-color: #ffe591;
+}
+
+
 
 #vinylBox {
     width: 540px;
@@ -102,6 +123,7 @@ h1 {
     position: absolute;
     right: 35px;
     top: 20px;
+    cursor: pointer;
     /* transition: 1.5s ease; */
 }
 
@@ -165,29 +187,6 @@ h1 {
     transition: 0.3s;
 }
 
-/* #edit {
-    width: 40px;
-    height: 249px;
-    position: absolute;
-    right: 16px;
-    top: 220px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.editBtn{
-    width: 28px;
-    height: 25px;
-    font-size: 17px;
-    text-align: center;
-    padding: auto;
-    border-radius: 5px;
-    border: none;
-    background-color: #f5f5f5;
-    color: rgb(88, 88, 88);
-} */
 
 
 
@@ -208,7 +207,9 @@ h1 {
 
       <div id="vinylTable">
           <!-- <div id="vinylBoxTop"></div> -->
+          
           <div id="vinylBox">
+            <div id="onOffBtn"><i class="fas fa-pause"></i></div>
             <img id="vinylNeedle" src="needle.png" >
              
             <img id="vinylMain" src="vinyl.png" >
@@ -227,10 +228,7 @@ h1 {
                 <span id="secondTimer">00</span>
             </div>
         </div>
-        <!-- <div id="edit">
-            <button id="plusBtn" class="editBtn"><i class="fas fa-plus"></i></button>
-            <button id="minusBtn" class="editBtn"><i class="fas fa-minus"></i></button>
-        </div> -->
+
 
         <div class="theBtn">
             <div id ="minBtn"></div>
@@ -266,7 +264,7 @@ h1 {
         let minutes_interval = setInterval(minCount, 60000);
         let seconds_interval = setInterval(secCount, 1000);
 
-        $("#titleDiv").click(()=>{
+        $("#onOffBtn").click(()=>{
             let pauseTimeMin = minTime.text();
             console.log(pauseTimeMin);
             clearInterval(minutes_interval);
@@ -292,14 +290,8 @@ h1 {
             let startS= secTime.text()-1;
             secTime.text(startS);
         }
-        
-
-        
        
     }
-    
-
-    
     
 
     $("#vinylNeedle").click(()=>{
@@ -316,26 +308,7 @@ h1 {
    
 
     
-    // var dragBtn;
-    // move();
-    // function move(){
-    //     var element = $("#minBtn");
-    //     element.css("position","absolute");
-    //     dragBtn = element;
-     
-    // dragBtn.mouseup(()=>{
-    //     dragBtn = null;
-    // })
-
-    // dragBtn.mousedown(()=>{
-    //         $(".theBtn").mousemove((e)=>{
-    //         let y = e.offsetY;
-    //         // let y2 = ;
-    //         console.log(y);
-    //         dragBtn.css("top",`${y}px`);
-    //     });
-    // });
-    // }
+    
     </script>
 
   </body>
