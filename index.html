@@ -243,28 +243,72 @@ h1 {
     
 
     <script type="text/javascript">
-    
-    $("#vinylNeedle").click(()=>{
-        $("#vinylNeedle").toggleClass("needleMove");
-    });
+
+    let minTime = $("#minutesTimer");
+    let secTime = $("#secondTimer");
+    let minValue = $("#minutesTimer").val();
+
 
     $(".theBtn").mousedown((e)=>{
         let y = e.offsetY;
         let moveBtn = $("#minBtn");
         moveBtn.css("position","absolute");
         moveBtn.css("top",`${y}px`);
-
         var changeMin = Math.ceil(y/2/5)*5;
-        console.log(changeMin);
+        minTime.text(changeMin);
+        minValue = changeMin;
+        console.log(minValue);
+        needleClick();
 
-        $("#minutesTimer").text(changeMin);
     });
+
+    function needleClick(){
+        $("#vinylNeedle").click(()=>{
+        secTime.text(59);
+        let x = secTime.text();
+        minCount ();
+        let minutes_interval = setInterval(minCount, 60000);
+        let seconds_interval = setInterval(secCount, 1000);
+
+        $("#titleDiv").click(()=>{
+            let pauseTimeMin = minTime.text();
+            console.log(pauseTimeMin);
+            clearInterval(minutes_interval);
+            clearInterval(seconds_interval);
+            $("#vinylNeedle").removeClass("needleMove");
+        })
+    });
+    }
+    
+
+
+    function minCount (){
+        let startM= minTime.text()-1;
+        minTime.text(startM);
+    }
+
+    function secCount(){
+        if (secTime.text() <= 0){
+            secTime.text(60);
+            let startS= secTime.text()-1;
+            secTime.text(startS);
+        } else {
+            let startS= secTime.text()-1;
+            secTime.text(startS);
+        }
+        
+
+        
+       
+    }
     
 
     
     
 
-    
+    $("#vinylNeedle").click(()=>{
+        $("#vinylNeedle").toggleClass("needleMove");
+    });
     
     
     
