@@ -256,8 +256,6 @@ h1 {
         moveBtn.css("top",`${y}px`);
         var changeMin = Math.ceil(y/2/5)*5;
         minTime.text(changeMin);
-        minValue = changeMin;
-        console.log(minValue);
         needleClick();
 
     });
@@ -265,7 +263,6 @@ h1 {
     function needleClick(){
         $("#vinylNeedle").click(()=>{
         secTime.text(59);
-        let x = secTime.text();
         minCount ();
         let minutes_interval = setInterval(minCount, 60000);
         let seconds_interval = setInterval(secCount, 1000);
