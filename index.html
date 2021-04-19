@@ -256,11 +256,10 @@ h1 {
         moveBtn.css("top",`${y}px`);
         var changeMin = Math.ceil(y/2/5)*5;
         minTime.text(changeMin);
-        needleClick();
 
     });
 
-    function needleClick(){
+   
         $("#vinylNeedle").click(()=>{
         secTime.text(59);
         minCount ();
@@ -275,7 +274,7 @@ h1 {
             $("#vinylNeedle").removeClass("needleMove");
         })
     });
-    }
+    
     
 
 
