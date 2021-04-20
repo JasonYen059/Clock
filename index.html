@@ -217,7 +217,7 @@ h1 {
 
           <div id="timeTable">
             <div class="timecount">
-                <span id="minutesTimer">00</span>
+                <span id="minutesTimer">40</span>
             </div>
 
             <div class="timecount">
@@ -254,23 +254,38 @@ h1 {
         moveBtn.css("top",`${y}px`);
         var changeMin = Math.ceil(y/2/5)*5;
         minTime.text(changeMin);
-
     });
 
    
         $("#vinylNeedle").click(()=>{
-        secTime.text(59);
-        minCount ();
-        let minutes_interval = setInterval(minCount, 60000);
-        let seconds_interval = setInterval(secCount, 1000);
 
-        $("#onOffBtn").click(()=>{
-            let pauseTimeMin = minTime.text();
-            console.log(pauseTimeMin);
-            clearInterval(minutes_interval);
-            clearInterval(seconds_interval);
-            $("#vinylNeedle").removeClass("needleMove");
+        if (secTime.text() != "00"){
+            secTime = secTime;
+            minTime =minTime;
+            let seconds_interval = setInterval(secCount, 1000);
+            //     if (secTime.text() == "0"){
+            //         let minutes_interval = setInterval(minCount, 60000);
+            // }  
+            
+            $("#onOffBtn").click(()=>{
+                clearInterval(seconds_interval);
+                $("#vinylNeedle").removeClass("needleMove");
+            })
+
+      } else {
+            secTime.text(59);
+            minCount ();
+            let minutes_interval = setInterval(minCount, 60000);
+            let seconds_interval = setInterval(secCount, 1000);
+
+            $("#onOffBtn").click(()=>{
+                let pauseTimeMin = minTime.text();
+                // console.log(pauseTimeMin);
+                clearInterval(minutes_interval);
+                clearInterval(seconds_interval);
+                $("#vinylNeedle").removeClass("needleMove");
         })
+        }   
     });
     
     
@@ -290,8 +305,11 @@ h1 {
             let startS= secTime.text()-1;
             secTime.text(startS);
         }
-       
     }
+
+    
+
+    
     
 
     $("#vinylNeedle").click(()=>{
