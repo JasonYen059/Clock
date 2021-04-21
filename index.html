@@ -57,7 +57,7 @@ h1 {
     align-items: center;
 }
 
-#vinylTable {
+#vinylTable, #diskTable {
     width: 560px;
     height: 500px;
     margin: auto;
@@ -66,16 +66,11 @@ h1 {
     align-items: center;
     position: relative;
 }
-/* #vinylBoxTop{
-    width: 540px;
-    height: 460px;
-    background-color: white;
-    opacity: 40%;
-    border-radius: 15px;
-    box-shadow: 5px 5px black;
-    position: absolute;
-    z-index: 1;
-} */
+#diskTable {
+    display: none;
+    width: 100%;
+  
+}
 
 #onOffBtn{
     width: 28px;
@@ -90,10 +85,12 @@ h1 {
     text-align: center;
     padding: 4px 0 0 0;
     cursor: pointer;
+    transition: all 0.5s;
 }
 
 #onOffBtn:hover{
-    transition: 0.5s;
+    transition: 0.5s ease;
+    transform: scale(1.2);
     background-color: #ffe591;
 }
 
@@ -186,6 +183,92 @@ h1 {
     box-shadow: 3px 3px 2px rgb(99, 98, 98);
     /* position: relative; */
     transition: 0.3s;
+    pointer-events: none;
+}
+
+#musicBtn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 5px solid rgb(170, 170, 170);
+    position: absolute;
+    bottom: 36px;
+    left: 15px;
+    background-color: rgb(211, 211, 211);
+    outline: none;
+    cursor: pointer;
+    transition: all 0.5s ;
+}
+#musicBtn:hover{
+    transition: 0.5s ease;
+    transform: scale(1.1);
+    box-shadow: 0px 3px #f5f5f5;
+    background-color: #ffe591;
+}
+
+#liDot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    background-color:rgb(170, 170, 170) ;
+    margin: auto;
+    position: relative;
+    top: -10px;
+}
+
+.albumStyle{
+    width: 500px;
+    height: 400px;
+    margin: auto;
+    border-radius: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    transition: all 1s ease;
+}
+.slideLeft {
+    transition: 1s;
+    animation-duration: 1s;
+    animation-name: left;
+    animation-fill-mode: forwards;
+    opacity: 40%;
+}
+
+@keyframes left{
+    from{
+        left: 0;
+    }
+    to{
+        left: -550px;
+    }
+}
+
+
+
+.albumImg{
+    width: 450px;
+    height: auto;
+}
+
+.LRBtn {
+    width: 45px;
+    height: 60px;
+    font-size: 40px;
+    border: none;
+    background: none;
+    position: absolute;
+    top: 200px;
+}
+
+#rightBtn {
+    right: 50px;
+}
+#leftBtn {
+    left: 50px;
 }
 
 
@@ -211,6 +294,7 @@ h1 {
           
           <div id="vinylBox">
             <div id="onOffBtn"><i class="fas fa-pause"></i></div>
+            <button id="musicBtn"><div id="liDot"></div></button>
             <img id="vinylNeedle" src="needle.png" >
             <img id="vinylMain" src="vinyl.png" >
           </div>
@@ -227,13 +311,29 @@ h1 {
             <div class="timecount">
                 <span id="secondTimer">00</span>
             </div>
-        </div>
+          </div>
 
-
-        <div class="theBtn">
+          <div class="theBtn">
             <div id ="minBtn"></div>
-        </div>
+          </div>
       </div>
+
+      <div id="diskTable">
+          <button id="checkalbum">This One !</button>
+          <div id="album1" class="albumStyle">
+            <img class="albumImg" src="XXXalbum.png" >
+          </div>
+          <!-- <div id="album2" class="albumStyle">
+            <img class="albumImg" src="LILPEEPalbum.png" >
+          </div>
+          <div id="album3" class="albumStyle">
+            <img class="albumImg" src="lofi.png" >
+          </div> -->
+          <button id="rightBtn" class="LRBtn"><i class="fas fa-chevron-right"></i></button>
+          <button id="leftBtn" class="LRBtn"><i class="fas fa-chevron-left"></i></button>
+      </div>
+
+
 
       
     </div>
@@ -254,6 +354,7 @@ h1 {
         moveBtn.css("top",`${y}px`);
         var changeMin = Math.ceil(y/2/5)*5;
         minTime.text(changeMin);
+        secTime.text("00");
     });
 
    
@@ -265,11 +366,9 @@ h1 {
             let leftSec2 = `${leftSec}000`;
             let minutes_setTimeout = setTimeout(minCount2, leftSec2);
             let seconds_interval = setInterval(secCount, 1000); 
-
-            // let minutes_interval = setInterval(minCount, 60000);
+            
             $("#onOffBtn").click(()=>{
                 clearInterval(minutes_setTimeout);
-                // clearInterval(minutes_interval);
                 clearInterval(seconds_interval);
                 $("#vinylNeedle").removeClass("needleMove");
             })
@@ -280,6 +379,7 @@ h1 {
             let minutes_interval = setInterval(minCount, 60000);
             let seconds_interval = setInterval(secCount, 1000);
 
+
             $("#onOffBtn").click(()=>{
                 let pauseTimeMin = minTime.text();
                 // console.log(pauseTimeMin);
@@ -289,6 +389,20 @@ h1 {
         })
         }   
     });
+
+    $("#musicBtn").click(()=>{
+        $("#vinylTable").slideUp("normal");
+        $("#diskTable").slideDown("normal");
+    })
+
+    $("#checkalbum").click(()=>{
+        $("#vinylTable").slideDown("normal");
+        $("#diskTable").slideUp("normal");
+    })
+
+    $("#leftBtn").click(()=>{
+        $("#album1").addClass("slideLeft");
+    })
     
     
 
