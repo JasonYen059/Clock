@@ -185,6 +185,7 @@ h1 {
 }
 
 .needleMove{
+    transition: all 0.5s;
     pointer-events: none;
     animation-name: needlerotate;
     animation-duration: 0.5s;
@@ -203,7 +204,8 @@ h1 {
 }
 
 .needleMoveBack {
-    /* pointer-events: none; */
+    transition: all 0.5s;
+    pointer-events:auto;
     animation-name: needleback;
     animation-duration: 0.5s;
     animation-fill-mode: forwards;
@@ -456,16 +458,8 @@ h1 {
     let peepvalue = $("#peepalbum").attr('value');
     let lofivalue = $("#lofialbum").attr('value');
     // let get = localStorage.getItem("chosenAlbum");
-    console.log(typeof minTime.text());
-    test();
-    function test(){
-        if (minTime.text() <= 4){
-        // clearInterval(minutes_setTimeout);
-        // clearInterval(seconds_interval);
-        alert("hi");}
-    }
+     
     
-
 
     $(".theBtn").mousedown((e)=>{
         let y = e.offsetY;
@@ -479,7 +473,6 @@ h1 {
 
    
         $("#vinylNeedle").click(()=>{
-            // $("#vinylNeedle").toggleClass("needleMove");
             let get = localStorage.getItem("chosenAlbum");  
             console.log(get);
             diskAnimation();
@@ -489,14 +482,15 @@ h1 {
             let leftSec2 = `${leftSec}000`;
             let minutes_setTimeout = setTimeout(minCount2, leftSec2);
             let seconds_interval = setInterval(secCount, 1000); 
-            $("#vinylNeedle").toggleClass("needleMove");
+            $("#vinylNeedle").addClass("needleMove");
             $("#vinylNeedle").removeClass("needleMoveBack");
-            playget(get);
-            
+            playget(get);     
+           
+
             $("#onOffBtn").click(()=>{
                 clearInterval(minutes_setTimeout);
                 clearInterval(seconds_interval);
-                $("#vinylNeedle").toggleClass("needleMoveBack");
+                $("#vinylNeedle").addClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
                 diskAnimationOff();
@@ -507,7 +501,7 @@ h1 {
             minCount ();
             let minutes_interval = setInterval(minCount, 60000);
             let seconds_interval = setInterval(secCount, 1000);
-            $("#vinylNeedle").toggleClass("needleMove");
+            $("#vinylNeedle").addClass("needleMove");
             $("#vinylNeedle").removeClass("needleMoveBack");
             playget(get);
 
@@ -516,7 +510,7 @@ h1 {
                 // console.log(pauseTimeMin);
                 clearInterval(minutes_interval);
                 clearInterval(seconds_interval);
-                $("#vinylNeedle").toggleClass("needleMoveBack");
+                $("#vinylNeedle").addClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
                 diskAnimationOff();
