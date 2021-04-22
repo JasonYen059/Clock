@@ -132,7 +132,7 @@ h1 {
 .diskOriginRoll{
     box-shadow: 4px 4px 4px black;
     animation-duration: 2s;
-    animation-name: roll;
+    animation-name: rollShadow;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
@@ -157,15 +157,14 @@ h1 {
 @keyframes rollShadow {
     0% {
         transform: rotate(0);
-        
+        box-shadow: 4px 4px 4px black;
     }
     50% {
-        /* transform: rotate(5deg); */
-        
+        box-shadow: 2px 2px 2px black;
     }
     100% {
         transform: rotate(360deg);
-       
+        box-shadow: 4px 4px 4px black;
     }
 }
 
@@ -182,14 +181,43 @@ h1 {
     right: 47px;
     top: 20px;
     cursor: pointer;
-    /* transition: 1.5s ease; */
+    transition: all 0.5s;
 }
 
 .needleMove{
-    /* transition: 1.5s ; */
+    pointer-events: none;
+    animation-name: needlerotate;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes needlerotate {
+    from{
+    transform:rotate(0deg);
+    transform-origin:60% 20% ;
+    }
+    to{
+    transform:rotate(25deg);
+    transform-origin:60% 20% ; 
+    }
+}
+
+.needleMoveBack {
+    /* pointer-events: none; */
+    animation-name: needleback;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes needleback {
+    from{
     transform:rotate(25deg);
     transform-origin:60% 20% ;
-    pointer-events: none;
+    }
+    to{
+    transform:rotate(0deg);
+    transform-origin:60% 20% ; 
+    }
 }
 
 #timeTable {
@@ -358,12 +386,6 @@ h1 {
 }
 
 
-
-
-
-
-
-
     </style>
 
   </head>
@@ -427,7 +449,6 @@ h1 {
 
     let minTime = $("#minutesTimer");
     let secTime = $("#secondTimer");
-    let minValue = $("#minutesTimer").val();
     let audio1 = new Audio('lofixxx.mp3');
     let audio2 = new Audio('lofiPeep.mp3');
     let audio3 = new Audio('lofipolog.mp3');
@@ -435,8 +456,15 @@ h1 {
     let peepvalue = $("#peepalbum").attr('value');
     let lofivalue = $("#lofialbum").attr('value');
     // let get = localStorage.getItem("chosenAlbum");
-    // console.log(get);
-
+    console.log(typeof minTime.text());
+    test();
+    function test(){
+        if (minTime.text() <= 4){
+        // clearInterval(minutes_setTimeout);
+        // clearInterval(seconds_interval);
+        alert("hi");}
+    }
+    
 
 
     $(".theBtn").mousedown((e)=>{
@@ -451,21 +479,24 @@ h1 {
 
    
         $("#vinylNeedle").click(()=>{
-            $("#vinylNeedle").toggleClass("needleMove");
+            // $("#vinylNeedle").toggleClass("needleMove");
             let get = localStorage.getItem("chosenAlbum");  
             console.log(get);
             diskAnimation();
+            
         if (secTime.text() != "00"){
             let leftSec = parseInt(secTime.text())+1 ;
             let leftSec2 = `${leftSec}000`;
             let minutes_setTimeout = setTimeout(minCount2, leftSec2);
             let seconds_interval = setInterval(secCount, 1000); 
-            
+            $("#vinylNeedle").toggleClass("needleMove");
+            $("#vinylNeedle").removeClass("needleMoveBack");
             playget(get);
             
             $("#onOffBtn").click(()=>{
                 clearInterval(minutes_setTimeout);
                 clearInterval(seconds_interval);
+                $("#vinylNeedle").toggleClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
                 diskAnimationOff();
@@ -476,6 +507,8 @@ h1 {
             minCount ();
             let minutes_interval = setInterval(minCount, 60000);
             let seconds_interval = setInterval(secCount, 1000);
+            $("#vinylNeedle").toggleClass("needleMove");
+            $("#vinylNeedle").removeClass("needleMoveBack");
             playget(get);
 
             $("#onOffBtn").click(()=>{
@@ -483,6 +516,7 @@ h1 {
                 // console.log(pauseTimeMin);
                 clearInterval(minutes_interval);
                 clearInterval(seconds_interval);
+                $("#vinylNeedle").toggleClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
                 diskAnimationOff();
