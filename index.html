@@ -100,13 +100,73 @@ h1 {
 #vinylBox {
     width: 560px;
     height: 450px;
-    background-color: grey;
+    background:radial-gradient(rgb(65, 65, 65),rgb(139, 139, 139));
     border-radius: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     box-shadow: 5px 5px black;
+}
+
+#diskorigin {
+    position: absolute;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    top: 42px;
+    left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.disktype {
+    position: absolute;
+    width: 125px;
+    top: 118px;
+    left: 117px;
+    opacity: 60%;
+}
+
+.diskOriginRoll{
+    box-shadow: 4px 4px 4px black;
+    animation-duration: 2s;
+    animation-name: roll;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.diskRoll {
+    animation-duration: 5s;
+    animation-name: roll;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes roll {
+    from {
+        transform: rotate(0);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes rollShadow {
+    0% {
+        transform: rotate(0);
+        
+    }
+    50% {
+        /* transform: rotate(5deg); */
+        
+    }
+    100% {
+        transform: rotate(360deg);
+       
+    }
 }
 
 #vinylMain {
@@ -136,7 +196,7 @@ h1 {
     width: 150px;
     height: 60px;
     border-radius: 20px;
-    opacity: 60%;
+    /* opacity: 60%; */
     font-size: 30px;
     /* background-color: #f5f5f5; */
     position: absolute;
@@ -159,9 +219,10 @@ h1 {
 
 .timecount span {
     font-family: Pacifico, sans-serif;
+    color: #313131;
     width: 40px;
     height: 40px;
-    text-shadow: 1px 1px 3px black;
+    text-shadow: 1px 1px 2px black;
 }
 
 
@@ -313,12 +374,16 @@ h1 {
         <h1>Vinyl Pomodoro</h1>
       </div>
 
-      <div id="vinylTable">
-          <!-- <div id="vinylBoxTop"></div> -->
-          
+      <div id="vinylTable"> 
           <div id="vinylBox">
             <div id="onOffBtn"><i class="fas fa-pause"></i></div>
             <button id="musicBtn"><div id="liDot"></div></button>
+            <div id="diskorigin">
+                <img src="disk.png" width="360px">
+                <div>
+                    <img class="disktype" >
+                </div>
+            </div>
             <img id="vinylNeedle" src="needle.png" >
             <img id="vinylMain" src="vinyl.png" >
           </div>
@@ -354,9 +419,6 @@ h1 {
           <button id="leftBtn" class="LRBtn"><i class="fas fa-chevron-left"></i></button>
       </div>
 
-
-
-      
     </div>
 
     
@@ -392,6 +454,7 @@ h1 {
             $("#vinylNeedle").toggleClass("needleMove");
             let get = localStorage.getItem("chosenAlbum");  
             console.log(get);
+            diskAnimation();
         if (secTime.text() != "00"){
             let leftSec = parseInt(secTime.text())+1 ;
             let leftSec2 = `${leftSec}000`;
@@ -405,6 +468,7 @@ h1 {
                 clearInterval(seconds_interval);
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
+                diskAnimationOff();
             })
 
       } else {
@@ -421,6 +485,7 @@ h1 {
                 clearInterval(seconds_interval);
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
+                diskAnimationOff();
         })
         }   
     });
@@ -480,16 +545,29 @@ h1 {
     })
 
 
+function diskAnimation() {
+    $(".disktype").toggleClass("diskRoll");
+    $("#diskorigin").toggleClass("diskOriginRoll");
+}
+
+function diskAnimationOff() {
+    $(".disktype").removeClass("diskRoll");
+    $("#diskorigin").removeClass("diskOriginRoll");
+}
+
 
 
 
 function playget (e){
     if (e == 1){
         audio1.play();
+        $(".disktype").attr("src","diskxxx.png")
     }else if (e == 2){
         audio2.play();
+        $(".disktype").attr("src","diskpeep.png")
     }else {
         audio3.play();
+        $(".disktype").attr("src","disklofi.png")
     }
 }
 
