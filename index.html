@@ -457,7 +457,7 @@ h1 {
     let xxxvalue = $("#xxxalbum").attr('value');
     let peepvalue = $("#peepalbum").attr('value');
     let lofivalue = $("#lofialbum").attr('value');
-    // let get = localStorage.getItem("chosenAlbum");
+    let get = localStorage.getItem("chosenAlbum");
      
     
 
@@ -471,51 +471,26 @@ h1 {
         secTime.text("00");
     });
 
+
+        let stratTimer;
    
         $("#vinylNeedle").click(()=>{
-            let get = localStorage.getItem("chosenAlbum");  
+            // let get = localStorage.getItem("chosenAlbum");  
             console.log(get);
             diskAnimation();
-            
-        if (secTime.text() != "00"){
-            let leftSec = parseInt(secTime.text())+1 ;
-            let leftSec2 = `${leftSec}000`;
-            let minutes_setTimeout = setTimeout(minCount2, leftSec2);
-            let seconds_interval = setInterval(secCount, 1000); 
-            $("#vinylNeedle").addClass("needleMove");
-            $("#vinylNeedle").removeClass("needleMoveBack");
-            playget(get);     
-           
-
-            $("#onOffBtn").click(()=>{
-                clearInterval(minutes_setTimeout);
-                clearInterval(seconds_interval);
-                $("#vinylNeedle").addClass("needleMoveBack");
-                $("#vinylNeedle").removeClass("needleMove");
-                stopAudio(get);
-                diskAnimationOff();
-            })
-
-      } else {
-            secTime.text(59);
-            minCount ();
-            let minutes_interval = setInterval(minCount, 60000);
-            let seconds_interval = setInterval(secCount, 1000);
+       
+            stratTimer = setInterval(timer, 1000);
             $("#vinylNeedle").addClass("needleMove");
             $("#vinylNeedle").removeClass("needleMoveBack");
             playget(get);
 
             $("#onOffBtn").click(()=>{
-                let pauseTimeMin = minTime.text();
-                // console.log(pauseTimeMin);
-                clearInterval(minutes_interval);
-                clearInterval(seconds_interval);
+                stopTimer();
                 $("#vinylNeedle").addClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
                 stopAudio(get);
                 diskAnimationOff();
-        })
-        }   
+        }) 
     });
 
     $("#musicBtn").click(()=>{
@@ -589,32 +564,25 @@ function diskAnimationOff() {
 function playget (e){
     if (e == 1){
         audio1.play();
+        audio1.loop = true;
         $(".disktype").attr("src","diskxxx.png")
     }else if (e == 2){
         audio2.play();
+        audio1.loop = true;
         $(".disktype").attr("src","diskpeep.png")
     }else {
         audio3.play();
+        audio1.loop = true;
         $(".disktype").attr("src","disklofi.png")
     }
 }
 
-function stopAudio(e) {
-    if (e == 1){
-        audio1.pause();
-    }else if (e == 2){
-        audio2.pause();
-    }else {
-        audio3.pause();
+    function stopAudio(e) {
+        if (e == 1){audio1.pause();}
+        else if (e == 2){audio2.pause();}
+        else {audio3.pause();}
     }
-    // audio.currentTime = 0;
-    }
-
-
-
-    
-
-      
+     
     function slidetomid(){
         $("#album1").animate({left:"-550px"},300);
     }
@@ -625,32 +593,31 @@ function stopAudio(e) {
         $("#album1").animate({left:"0px"},300);
     }
 
-
-    function minCount (){
-        let startM= minTime.text()-1;
-        minTime.text(startM);
-    }
-
-    function secCount(){
-        if (secTime.text() <= 0){
-            secTime.text(60);
-            let startS= secTime.text()-1;
-            secTime.text(startS);
-        } else {
-            let startS= secTime.text()-1;
-            secTime.text(startS);
+    
+    
+    function timer(){
+        // work count down
+        if (secTime.text() != 0){
+            let starts = secTime.text()-1;
+            secTime.text(starts);
+        } else if ( minTime.text() != 0 && secTime.text() == 0){
+            secTime.text(59);
+            let startm = minTime.text()-1;
+            minTime.text(startm);
         }
+
+        if (minTime.text() == 0 && secTime.text() == 0){
+            diskAnimationOff()
+            stopAudio(get);
+            $("#vinylNeedle").addClass("needleMoveBack");
+            $("#vinylNeedle").removeClass("needleMove");
+        }
+
     }
 
-    function minCount2 (){
-        let minPause = minTime.text()-1;
-        minTime.text(minPause);
-        let minutes_interval2 = setInterval(minCount, 60000);
+    function stopTimer(){
+        clearInterval(stratTimer);
     }
-
-    
-    
-    
 
     
     
