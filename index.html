@@ -91,7 +91,7 @@ h1 {
 
 #onOffBtn:hover{
     transition: 0.5s ease;
-    transform: scale(1.2);
+    transform: scale(1.3);
     background-color: #ffe591;
 }
 
@@ -457,7 +457,7 @@ h1 {
     let xxxvalue = $("#xxxalbum").attr('value');
     let peepvalue = $("#peepalbum").attr('value');
     let lofivalue = $("#lofialbum").attr('value');
-    let get = localStorage.getItem("chosenAlbum");
+    // let get = localStorage.getItem("chosenAlbum");
      
     
 
@@ -475,7 +475,7 @@ h1 {
         let stratTimer;
    
         $("#vinylNeedle").click(()=>{
-            // let get = localStorage.getItem("chosenAlbum");  
+            let get = localStorage.getItem("chosenAlbum");  
             console.log(get);
             diskAnimation();
        
@@ -488,7 +488,7 @@ h1 {
                 stopTimer();
                 $("#vinylNeedle").addClass("needleMoveBack");
                 $("#vinylNeedle").removeClass("needleMove");
-                stopAudio(get);
+                stopAudio();
                 diskAnimationOff();
         }) 
     });
@@ -578,9 +578,12 @@ function playget (e){
 }
 
     function stopAudio(e) {
-        if (e == 1){audio1.pause();}
-        else if (e == 2){audio2.pause();}
-        else {audio3.pause();}
+        // if (e == 1){audio1.pause();}
+        // else if (e == 2){audio2.pause();}
+        // else {audio3.pause();}
+        audio1.pause();
+        audio2.pause();
+        audio3.pause();
     }
      
     function slidetomid(){
@@ -608,7 +611,7 @@ function playget (e){
 
         if (minTime.text() == 0 && secTime.text() == 0){
             diskAnimationOff()
-            stopAudio(get);
+            stopAudio();
             $("#vinylNeedle").addClass("needleMoveBack");
             $("#vinylNeedle").removeClass("needleMove");
         }
