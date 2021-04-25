@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Pomodoro App</title>
+    <title>vinyl Player</title>
     <meta charset="utf-8" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -258,7 +258,7 @@ h1 {
 
 .theBtn {
     width: 30px;
-    height: 160px;
+    height: 150px;
     position: absolute;
     top: 265px;
     right: 31px;
@@ -414,7 +414,7 @@ h1 {
 
           <div id="timeTable">
             <div class="timecount">
-                <span id="minutesTimer">40</span>
+                <span id="minutesTimer">00</span>
             </div>
 
             <div class="timecount">
@@ -458,7 +458,8 @@ h1 {
     let peepvalue = $("#peepalbum").attr('value');
     let lofivalue = $("#lofialbum").attr('value');
     // let get = localStorage.getItem("chosenAlbum");
-     
+    
+    
     
 
     $(".theBtn").mousedown((e)=>{
@@ -466,10 +467,17 @@ h1 {
         let moveBtn = $("#minBtn");
         moveBtn.css("position","absolute");
         moveBtn.css("top",`${y}px`);
-        var changeMin = Math.ceil(y/2/5)*5;
-        minTime.text(changeMin);
-        secTime.text("00");
+        var changeV = 1-(Math.floor(y/15))/10;
+        var changeV2 =Math.round(changeV*10)/10;
+        console.log(changeV2);
+        volumeControl(changeV2);
     });
+
+    function volumeControl(i){
+        audio1.volume=i;
+        audio2.volume=i;
+        audio3.volume=i;
+    }
 
 
         let stratTimer;
@@ -492,6 +500,9 @@ h1 {
                 diskAnimationOff();
         }) 
     });
+
+
+
 
     $("#musicBtn").click(()=>{
         $("#vinylTable").slideUp("normal");
@@ -600,22 +611,21 @@ function playget (e){
     
     function timer(){
         // work count down
-        if (secTime.text() != 0){
-            let starts = secTime.text()-1;
-            secTime.text(starts);
-        } else if ( minTime.text() != 0 && secTime.text() == 0){
-            secTime.text(59);
-            let startm = minTime.text()-1;
-            minTime.text(startm);
+        if (secTime.text() == 59){
+            secTime.text(0);
+            let starts = Number(secTime.text()) ;
+            let gos = ('0'+(starts)).substr(-2);
+            secTime.text(gos);
+            let startm = Number(minTime.text())+1;
+            let gom = ('0'+(startm)).substr(-2);
+            minTime.text(gom);
+        } else {
+            let starts = Number(secTime.text())+1 ;
+            let gos = ('0'+(starts)).substr(-2);
+            // let starts = secTime.text()+1;
+            // console.log(typeof starts);
+            secTime.text(gos);    
         }
-
-        if (minTime.text() == 0 && secTime.text() == 0){
-            diskAnimationOff()
-            stopAudio();
-            $("#vinylNeedle").addClass("needleMoveBack");
-            $("#vinylNeedle").removeClass("needleMove");
-        }
-
     }
 
     function stopTimer(){
